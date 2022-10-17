@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class ShoppingDtoRequest
 {
     private String customerProductActiveId;
-    private double mount;
+    private double amount;
 }
