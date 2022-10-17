@@ -2,7 +2,7 @@ package com.nttdata.bootcamp.project.Shopping.controller;
 
 import com.nttdata.bootcamp.project.Shopping.dto.ShoppingDtoRequest;
 import com.nttdata.bootcamp.project.Shopping.dto.ShoppingDtoResponse;
-import com.nttdata.bootcamp.project.Shopping.service.ShoppingService;
+import com.nttdata.bootcamp.project.Shopping.service.IShoppingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 public class ShoppingController
 {
     @Autowired
-    private ShoppingService service;
+    private IShoppingService service;
     @GetMapping
     public Flux<ShoppingDtoResponse> getProductTypes()
     {

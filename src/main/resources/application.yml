@@ -1,6 +1,6 @@
 spring:
   application:
-    name: service-operation
+    name: service-shopping
   data:
     mongodb:
       database: bootcamp_shopping_db
