@@ -7,52 +7,54 @@ import com.nttdata.bootcamp.project.Shopping.utils.IShoppingMapper;
 import com.nttdata.bootcamp.project.Shopping.utils.ShoppingMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
-public class ShoppingService
-        implements IShoppingService<ShoppingDtoRequest, ShoppingDtoResponse> {
+public class ShoppingService implements IShoppingService<ShoppingDtoRequest, ShoppingDtoResponse> {
     @Autowired
-    private final IShoppingRepository shoppingRepository;
+    private final IShoppingRepository repository;
+    @Value("${message.uri}")
+    String uri;
     @Override
     public Flux<ShoppingDtoResponse> getAll() {
-        IShoppingMapper mapper = new ShoppingMapper();
-        return shoppingRepository.findAll()
+        IShoppingMapper mapper = new ShoppingMapper(uri);
+        return repository.findAll()
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<ShoppingDtoResponse> getById(String id)
     {
-        IShoppingMapper mapper = new ShoppingMapper();
-        return shoppingRepository.findById(id)
+        IShoppingMapper mapper = new ShoppingMapper(uri);
+        return repository.findById(id)
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<ShoppingDtoResponse> save(Mono<ShoppingDtoRequest> object)
     {
-        IShoppingMapper mapper = new ShoppingMapper();
+        IShoppingMapper mapper = new ShoppingMapper(uri);
         return object.map(mapper::toEntity)
-                .flatMap(shoppingRepository::insert)
+                .flatMap(repository::insert)
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<ShoppingDtoResponse> update(Mono<ShoppingDtoRequest> object, String id)
     {
-        IShoppingMapper mapper = new ShoppingMapper();
-        return shoppingRepository.findById(id)
+        IShoppingMapper mapper = new ShoppingMapper(uri);
+        return repository.findById(id)
                 .flatMap(
                         p -> object.map(mapper::toEntity)
                                 .doOnNext(e -> e.setId(id))
                 )
-                .flatMap(shoppingRepository::save)
+                .flatMap(repository::save)
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<Void> delete(String id)
     {
-        return shoppingRepository.deleteById(id);
+        return repository.deleteById(id);
     }
 }

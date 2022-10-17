@@ -21,27 +21,27 @@ public class ShoppingController
     @Autowired
     private IShoppingService service;
     @GetMapping
-    public Flux<ShoppingDtoResponse> getProductTypes()
+    public Flux<ShoppingDtoResponse> getAll()
     {
         return service.getAll();
     }
     @GetMapping("/{id}")
-    public Mono<ShoppingDtoResponse> getProductType(@PathVariable String id)
+    public Mono<ShoppingDtoResponse> getById(@PathVariable String id)
     {
         return service.getById(id);
     }
     @PostMapping
-    public Mono<ShoppingDtoResponse> saveProductType(@RequestBody Mono<ShoppingDtoRequest> shoppingDtoRequest)
+    public Mono<ShoppingDtoResponse> save(@RequestBody Mono<ShoppingDtoRequest> requestMono)
     {
-        return service.save(shoppingDtoRequest);
+        return service.save(requestMono);
     }
     @PutMapping("/update/{id}")
-    public Mono<ShoppingDtoResponse> updateProductType(@RequestBody Mono<ShoppingDtoRequest> shoppingDtoRequest, @PathVariable String id)
+    public Mono<ShoppingDtoResponse> update(@RequestBody Mono<ShoppingDtoRequest> requestMono, @PathVariable String id)
     {
-        return service.update(shoppingDtoRequest,id);
+        return service.update(requestMono,id);
     }
     @DeleteMapping("/delete/{id}")
-    public Mono<Void> deleteProduct(@PathVariable String id)
+    public Mono<Void> delete(@PathVariable String id)
     {
         return service.delete(id);
     }

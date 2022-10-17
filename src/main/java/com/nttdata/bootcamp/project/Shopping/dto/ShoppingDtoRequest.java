@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ShoppingDtoRequest
 {
-    private String id;
     private String customerProductActiveId;
     private double mount;
 }

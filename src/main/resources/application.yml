@@ -17,3 +17,4 @@ server:
   port: 8006
 message:
   path-shopping: /api/v1/shoppings
+  uri: /api/v1/customerTypes/
