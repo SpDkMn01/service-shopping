@@ -11,31 +11,33 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+/**
+ * <h1>Shopping Service</h1>
+ * @Author Grupo06
+ * @version 1.0
+ * @since 2022-10-18
+ */
 @Service
 @RequiredArgsConstructor
 public class ShoppingService implements IShoppingService<ShoppingDtoRequest, ShoppingDtoResponse> {
     @Autowired
     private final IShoppingRepository repository;
-    @Value("${message.uri}")
-    String uri;
+    @Autowired
+    private final IShoppingMapper mapper;
     @Override
     public Flux<ShoppingDtoResponse> getAll() {
-        IShoppingMapper mapper = new ShoppingMapper(uri);
         return repository.findAll()
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<ShoppingDtoResponse> getById(String id)
     {
-        IShoppingMapper mapper = new ShoppingMapper(uri);
         return repository.findById(id)
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<ShoppingDtoResponse> save(Mono<ShoppingDtoRequest> object)
     {
-        IShoppingMapper mapper = new ShoppingMapper(uri);
         return object.map(mapper::toEntity)
                 .flatMap(repository::insert)
                 .map(mapper::toDtoResponse);
@@ -43,7 +45,6 @@ public class ShoppingService implements IShoppingService<ShoppingDtoRequest, Sho
     @Override
     public Mono<ShoppingDtoResponse> update(Mono<ShoppingDtoRequest> object, String id)
     {
-        IShoppingMapper mapper = new ShoppingMapper(uri);
         return repository.findById(id)
                 .flatMap(
                         p -> object.map(mapper::toEntity)

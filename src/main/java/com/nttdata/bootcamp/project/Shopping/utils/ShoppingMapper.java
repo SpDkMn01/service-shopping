@@ -4,9 +4,20 @@ import com.nttdata.bootcamp.project.Shopping.dto.ShoppingDtoRequest;
 import com.nttdata.bootcamp.project.Shopping.dto.ShoppingDtoResponse;
 import com.nttdata.bootcamp.project.Shopping.entity.Shopping;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-@AllArgsConstructor
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+/**
+ * <h1>Shopping Mapper</h1>
+ * @Author Grupo06
+ * @version 1.0
+ * @since 2022-10-18
+ */
+@RequiredArgsConstructor
+@Component
 public class ShoppingMapper implements IShoppingMapper {
+    @Value("${message.uri}")
     private String uri;
     @Override
     public ShoppingDtoRequest toDtoRequest(Shopping shopping)
