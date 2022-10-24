@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  db_shopping:
+    image: mongo
+    container_name: db_shopping
+    ports:
+      - "27022:27017"
+    environment:
+      - "MONGO_INITDB_DATABASE=bootcamp_shopping_db"
+  service-shopping:
+    image: service-shopping
+    container_name: service-shopping
+    depends_on:
+      - db_shopping
+    ports:
+      - "8008:8000"

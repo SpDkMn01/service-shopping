@@ -4,17 +4,21 @@ spring:
   data:
     mongodb:
       database: bootcamp_shopping_db
-      host: localhost
-      port: 8904
+      host: db_shopping
+      port: 27017
   config:
-    import: optional:configserver:http://localhost:9080
+    import: optional:configserver:http://192.168.31.220:8002
 management:
   endpoints:
     web:
       exposure:
         include: "*"
 server:
-  port: 8006
+  port: 8000
 message:
   path-shopping: /api/v1/shoppings
   uri: /api/v1/customerTypes/
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.31.220:8000/eureka/
